@@ -34,3 +34,7 @@ print(device)
 #삭제
 del device["아이폰"]
 print(device)
+
+#반복문
+for item in device.items():
+    print(item)
