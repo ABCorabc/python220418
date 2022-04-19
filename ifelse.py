@@ -39,3 +39,42 @@ for i in lst:
     if i % 2 == 0:
         continue
     print("Item:{0}".format(i))
+
+#수열함수
+print(list(range(10)))
+print(list(range(12,11)))
+
+#메뉴얼하게 루프를 도는 경우
+for i in range(5):
+    print(i)
+
+#년도
+#print(list(range(2000,2023)))
+
+#리스트 컴프리헨션(리스트 임베딩) : 한 줄로 필터링, 루프, 가공까지 -> 파이썬스럽다.
+lst = list(range(1,11))
+print([i**2 for i in lst if i > 5])
+
+#필터함수 : filter(), map(), reduce()함수
+lst = [20, 25, 30]
+
+iterL = filter(None, lst)
+for i in iterL:
+    print("Item:{0}".format(i))
+
+print("---필터링---")
+
+#필터링 함수 정의(논리식에서 True면 포함)
+def getBiggerThan20(i):
+    return i > 20
+
+#파이썬은 무조건 참조가 복사
+iterL = filter(getBiggerThan20, lst)
+for i in iterL:
+    print("Item:{0}".format(i))
+
+#람다함수로 정의
+print("---람다함수---")
+iterL = filter(lambda x:x>20, lst)
+for i in iterL:
+    print("Item:{0}".format(i))
