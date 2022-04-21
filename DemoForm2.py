@@ -4,8 +4,14 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
+#웹서버와 통신
+import urllib.request
+#웹크롤링
+from bs4 import BeautifulSoup
+
 #화면을 로딩(DemoForm2.ui)
-form_class = uic.loadUiType("c:\\work\\DemoForm2.ui")[0]
+form_class = uic.loadUiType("DemoForm2.ui")[0]
+
 
 #윈도우 클래스 정의(QMainWindow)
 class DemoForm(QMainWindow, form_class):
@@ -14,7 +20,24 @@ class DemoForm(QMainWindow, form_class):
         self.setupUi(self)
     #슬롯 메서드(시그널 처리)
     def firstClick(self):
-        self.label.setText("첫번째 클릭")
+        #파일에 저장
+        f = open("c:\\work\\webtoon.txt", "wt", encoding="utf-8")
+        #페이지 번호 생성
+        for i in range(1,6):
+            #웹서버에 요청
+            url = "https://comic.naver.com/webtoon/list?titleId=20853&weekday=fri&page=" + str(i)
+            print(url)
+            data = urllib.request.urlopen(url)
+            soup = BeautifulSoup(data, "html.parser")
+            cartoons = soup.find_all("td", class_="title")
+
+        for item in cartoons:
+            title = item.find("a").text
+            print(title.strip())
+            f.write(title + "\n")
+
+        f.close()            
+        self.label.setText("네이버 웹툰 크롤링 종료~~")
     def secondClick(self):
         self.label.setText("두번째 클릭22")
     def thirdClick(self):
